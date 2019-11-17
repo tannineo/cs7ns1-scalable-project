@@ -1,0 +1,8 @@
+{
+  "name": "cs7ns1-scalable-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/tannineo/cs7ns1-scalable-project.git",
+  "author": "tannineo <tannineo@outlook.com>",
+  "license": "MIT"
+}
