@@ -36,12 +36,32 @@ The simulation will contain:
 
 - simulation communications: UDP
   - datagrams are sent and never cared by sender, it's more like 'real' communications via radio connetions
+  - and light weight for runtime
 - data encryption: since it's not our focus, we do not use encryption / or just pick one
   - in real world ZigBee will handle it (?)
+
+So the sensors should:
+
+- have a whole set of IPs and ports of each other to conmunicate
 
 Why using ZigBee? Not WiFi? Not Bluetooth?
 
 ### Power Comsumption: Communication vs Others (Processing and Sensoring)
+
+The should be a paper about the CURVE of range-comsumption.
+And also a paper of the transmission/communication takes how much of the power of the whole system.
+
+The sensors should:
+
+- have a setting of how much energy it will consume to perform:
+  - data transmission
+  - maintenance (including sensoring and processing)
+- a setting to determine the range of communication, including:
+  - maximum range mode
+  - normal mode (power saving mode?)
+    - can ZigBee control the range of itself? If so then only maximum is needed
+- keep updating the power value in key-value storage
+- send logs on power consumption details
 
 ### Data Capacity
 
@@ -55,9 +75,22 @@ Except communications, any other things we need to consider?
 
 ### Simulation Situation
 
+We may face these situations in our simulation:
+
 - a node is charged / not charged: Do we really need to charge a BAN device?
   - or just replace it (so it does down for a while)
 - when the position of the sensor changes
+- when there is a important data
+- the 'sink' goes down
+  - 'sink' is the center of our
+
+So we (operators of simulations) can do changes during runtime on:
+
+- a switch to turn on / off the sensor
+  - also a heart beat (though we do not have to do it in a simulator)
+- the power value
+- the 'positions'(a set of coodinates)
+- a switch of 'start sending important data'
 
 ## Simulator / Sensor Design
 
