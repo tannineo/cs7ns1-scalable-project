@@ -1,0 +1,12 @@
+# OS files
+.DS_Store
+
+# editor files
+.vscode
+
+# node dependencies
+node_modules
+
+# node lock files
+yarn.lock
+package-lock.json

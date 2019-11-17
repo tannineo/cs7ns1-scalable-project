@@ -24,8 +24,9 @@ The simulation will contain:
 
 - `redis`: key-value memory storage for runtime configurations, some settings can be changed during runtime
 - `elastic`: the log collecting server
-  - `kibana`: the webpage ui of elastic, allow also viewing data in charts
+  - `kibana`: the webpage ui of elastic, which also allows viewing data in charts
 - our own sensors
+  - use parameters (env variables) to initialize different sensors in from one set of code (the docker image)
 
 ## Key Factors
 
