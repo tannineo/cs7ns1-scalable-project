@@ -1,0 +1,10 @@
+{
+  "verbose": true,
+  "ignore": ["*.test.js", "**/*.jpg"],
+  "execMap": {
+    "js": "babel-node --inspect=23333"
+  },
+  "env": {
+    "DEBUG": "sensor:*"
+  }
+}

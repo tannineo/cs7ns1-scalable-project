@@ -6,12 +6,13 @@
   "author": "tannineo <tannineo@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "DEBUG=sensor:* babel-node src/index.js"
+    "dev": "npx nodemon src/index.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
     "@babel/node": "^7.7.0",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/preset-env": "^7.7.1",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
@@ -23,7 +24,8 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.4"
   },
   "dependencies": {
     "debug": "^4.1.1",
