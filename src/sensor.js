@@ -1,5 +1,5 @@
 import envs from './envs.js'
-
+import consts from './consts.js'
 export default class Sensor {
   /**
    * the debug logger
@@ -16,11 +16,18 @@ export default class Sensor {
    */
   name
 
+  /**
+   * the type of sensor
+   */
+  type
+
   constructor() {
+    // TODO: make the constructor works with options
     this.logger = require('debug')(
       envs.S_DEBUG_PREFIX + __filename + ':' + envs.sensor.S_SENSOR_NAME
     )
     this.name = envs.sensor.S_SENSOR_NAME
+    this.type = consts.SENSOR_TYPE[envs.sensor.S_SENSOR_TYPE]
   }
 
   run() {

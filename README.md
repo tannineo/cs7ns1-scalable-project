@@ -94,6 +94,18 @@ So we (operators of simulations) can do changes during runtime on:
 
 ## Simulator / Sensor Design
 
+The code structure:
+
+```
+index.js
+   |
+sensor.js                   => envs.js => consts.js
+   +-------+-------+
+   |       |       |
+comm.js data.js superv.js
+
+```
+
 ## Visualization
 
 ## About

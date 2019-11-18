@@ -15,14 +15,13 @@ const S_REDIS_DB = process.env.S_REDIS_DB || '0'
 
 // sensor settings
 const S_SENSOR_NAME = process.env.S_SENSOR_NAME || 'sensor233'
-const S_SENSOR_TYPE = process.env.S_SENSOR_TYPE || 'pacemaker'
-const S_IS_SINK = process.env.S_IS_SINK || 0 // the sink is special
+const S_SENSOR_TYPE = process.env.S_SENSOR_TYPE || 'sink' // the sink is special
 const S_T_INTERVAL = 500 // ms
-const S_MAX_RANGE = process.env.S_MAX_RANGE || 10 // cm
-const S_MAX_POWER = process.env.S_MAX_POWER || 100000
+const S_MAX_RANGE = parseInt(process.env.S_MAX_RANGE || 10) // cm
+const S_MAX_POWER = parseInt(process.env.S_MAX_POWER || 100000)
 // the power used
-const S_POWER_USE_T = process.env.S_POWER_USE_T || 1
-const S_POWER_USE_N = process.env.S_POWER_USE_N || 1
+const S_POWER_USE_T = parseInt(process.env.S_POWER_USE_T || 1)
+const S_POWER_USE_N = parseInt(process.env.S_POWER_USE_N || 1)
 
 const settings = {
   udp: {
@@ -39,7 +38,6 @@ const settings = {
   sensor: {
     S_SENSOR_NAME,
     S_SENSOR_TYPE,
-    S_IS_SINK,
     S_T_INTERVAL,
     S_MAX_RANGE,
     S_MAX_POWER,
