@@ -54,10 +54,10 @@ And also a paper of the transmission/communication takes how much of the power o
 The sensors should:
 
 - have a setting of how much energy it will consume to perform:
-  - data transmission
-  - maintenance (including sensoring and processing)
+  - [x] data transmission
+  - [x] maintenance (including sensoring and processing)
 - a setting to determine the range of communication, including:
-  - maximum range mode
+  - [x] maximum range mode
   - normal mode (power saving mode?)
     - can ZigBee control the range of itself? If so then only maximum is needed
 - keep updating the power value in key-value storage
