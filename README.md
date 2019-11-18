@@ -96,14 +96,14 @@ So we (operators of simulations) can do changes during runtime on:
 
 The code structure:
 
-```
+```text
 index.js
    |
-sensor.js                   => envs.js => consts.js
-   +-------+-------+
-   |       |       |
-comm.js data.js superv.js
-
+sensor.js                          => envs.js => consts.js
+   |                               => helpers.js
+   +-------+-------+---------+
+   |       |       |         |
+comm.js data.js superv.js power.js
 ```
 
 ## Visualization
