@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "extends": ["standard", "prettier"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true,
+    "jest": true,
+    "es6": true
+  }
+}
