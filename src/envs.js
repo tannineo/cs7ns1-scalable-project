@@ -15,8 +15,8 @@ const S_REDIS_DB = process.env.S_REDIS_DB || '0'
 
 // sensor settings
 const S_SENSOR_NAME = process.env.S_SENSOR_NAME || 'sensor233'
-const S_SENSOR_TYPE = process.env.S_SENSOR_TYPE || 'sink' // the sink is special
-const S_T_INTERVAL = 500 // ms
+const S_SENSOR_TYPE = process.env.S_SENSOR_TYPE || 'body_temp' // the sink is special
+const S_T_INTERVAL = 2000 // ms
 const S_MAX_RANGE = parseInt(process.env.S_MAX_RANGE || 10) // cm
 const S_MAX_POWER = parseInt(process.env.S_MAX_POWER || 100000)
 // the power used

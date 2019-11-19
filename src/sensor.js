@@ -61,21 +61,38 @@ export default class Sensor {
       envs.S_DEBUG_PREFIX + 'sensor.js:' + envs.sensor.S_SENSOR_NAME
     this.logger = require('debug')(this.loggerHandle)
     this.name = envs.sensor.S_SENSOR_NAME
+
+    // TODO: verify the sensor type at the initialization
     this.type = consts.SENSOR_TYPE[envs.sensor.S_SENSOR_TYPE]
 
     // init all the modules
     const option = {
-      loggerHandle: this.loggerHandle
+      loggerHandle: this.loggerHandle,
+      type: this.type,
+      name: this.name
     }
     this.power = new Power(option)
     this.comm = new Comm(option)
-    this.data = new Data({ type: this.type, ...option })
+    this.data = new Data(option)
     this.superv = new SuperV(option)
   }
 
-  run() {
-    this.interval = setInterval(() => {
-      this.logger('the sensor producing data...')
+  async run() {
+    this.interval = setInterval(async () => {
+      this.logger('>>>>>>>> SENSOR LIFECYCLE START?????... <<<<<<<<')
+
+      // test all the functions below
+      await this.superv.getPosition()
+      await this.superv.setPosition({ x: 1, y: 2 })
+      await this.superv.getPower()
+      await this.superv.setPower(23313)
+      await this.superv.getSwitch()
+      const da = this.data.genData()
+      await this.superv.getAllSensorCoordinates()
+      this.data.pushData(da)
+      this.data.popData()
+
+      this.logger('>>>>>>>> SENSOR LIFECYCLE END?????... <<<<<<<<')
     }, envs.sensor.S_T_INTERVAL)
   }
 }

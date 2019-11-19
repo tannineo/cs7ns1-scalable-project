@@ -3,8 +3,8 @@ export default {
    * The difined sensor type
    */
   SENSOR_TYPE: {
-    sink: 0,
-    pace_maker: 1
+    sink: 'sink',
+    body_temp: 'body_temp'
   },
   REDIS_PREFIX: 'sensor_simu:',
   REDIS_KEY: {
