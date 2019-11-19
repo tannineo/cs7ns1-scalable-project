@@ -106,6 +106,20 @@ sensor.js                          => envs.js => consts.js
 comm.js data.js superv.js power.js
 ```
 
+the lifecycle in one T:
+
+- superv: update the sensor settings based on things in redis
+  -
+- data: producing the sensor data
+- power: routine energy consumption
+- data: transmiting and deleting the stored data
+- superv: update the sensor settings to redis
+
+besides the lifecycle, the sensor will ALWAYS listen to the message
+
+- data: listen and store the data
+
+
 ## Visualization
 
 ## About

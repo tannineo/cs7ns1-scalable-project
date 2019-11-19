@@ -1,6 +1,6 @@
 const S_DEBUG_PREFIX = 'sensor:'
 
-const log = require('debug')(S_DEBUG_PREFIX + __filename)
+const log = require('debug')(S_DEBUG_PREFIX + 'envs')
 
 // udp settings
 const S_SERVER_NAME = process.env.S_SERVER_NAME || 'sensor' + Date.now()
