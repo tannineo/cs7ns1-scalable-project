@@ -82,6 +82,7 @@ export default class Sensor {
       this.logger('>>>>>>>> SENSOR LIFECYCLE START?????... <<<<<<<<')
 
       // test all the functions below
+      // TODO remove test
       await this.superv.getPosition()
       await this.superv.setPosition({ x: 1, y: 2 })
       await this.superv.getPower()

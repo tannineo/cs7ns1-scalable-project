@@ -44,7 +44,6 @@ export default class Comm {
   }
 
   sendData2Node(data, host, port) {
-    // TODO remove test
     const client = dgram.createSocket(envs.udp.S_UDP_TYPE)
     const buf = Buffer.from(JSON.stringify(data), 'utf8')
     client.send(buf, port, host, err => {

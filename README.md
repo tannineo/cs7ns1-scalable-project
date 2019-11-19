@@ -100,21 +100,28 @@ The code structure:
 index.js
    |
 sensor.js                                   => envs.js => consts.js
-   |                                            => coordinate.js
-   +-------+-------+---------+--------+             => dummyData.json
+   |                                            => coordinate.js  // the class containing position also methods to calculate
+   +-------+-------+---------+--------+             => dummyData.json  // the dummy sensor data
    |       |       |         |        |
 comm.js data.js superv.js power.js route.js
 ```
 
 the lifecycle in one T:
 
-- superv: update the sensor settings based on things in redis
+- superv: update the sensor settings based on things in redis:
+  - switch on / off
+  - power
+  - position
 - data: producing the sensor data
 - power: routine energy consumption
-- data: transmiting and deleting the stored data
-- superv: update the sensor settings to redis
+- data: pop (a limited amout of) data from the stored data
+- comm: calculate the route & transmitting the data
+- power: transmiting energy consumption
+- superv: update the sensor status to redis:
+  - power
+  - data load
 
-besides the lifecycle, the sensor will ALWAYS listen to the message
+besides the lifecycle, the sensor will ALWAYS listen to the message, so the the sensor parallel the data receiving process
 
 - data: listen and store the data
 
