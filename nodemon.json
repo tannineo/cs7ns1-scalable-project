@@ -1,6 +1,6 @@
 {
   "verbose": true,
-  "ignore": ["*.test.js", "**/*.jpg"],
+  "ignore": ["*.test.js", "**/*.jpg", "*.md"],
   "execMap": {
     "js": "babel-node --inspect=23333"
   },
