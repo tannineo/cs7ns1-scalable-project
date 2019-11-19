@@ -91,6 +91,7 @@ export default class Sensor {
       await this.superv.getAllSensorCoordinates()
       this.data.pushData(da)
       this.data.popData()
+      await this.comm.sendData2Node({ msg: 'test message' }, 'localhost', 6666)
 
       this.logger('>>>>>>>> SENSOR LIFECYCLE END?????... <<<<<<<<')
     }, envs.sensor.S_T_INTERVAL)

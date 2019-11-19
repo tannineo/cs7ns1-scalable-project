@@ -99,17 +99,16 @@ The code structure:
 ```text
 index.js
    |
-sensor.js                          => envs.js => consts.js
-   |                               => coordinate.js
-   +-------+-------+---------+
-   |       |       |         |
-comm.js data.js superv.js power.js
+sensor.js                                   => envs.js => consts.js
+   |                                            => coordinate.js
+   +-------+-------+---------+--------+             => dummyData.json
+   |       |       |         |        |
+comm.js data.js superv.js power.js route.js
 ```
 
 the lifecycle in one T:
 
 - superv: update the sensor settings based on things in redis
-  -
 - data: producing the sensor data
 - power: routine energy consumption
 - data: transmiting and deleting the stored data

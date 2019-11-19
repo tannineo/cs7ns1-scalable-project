@@ -6,9 +6,8 @@ export default class Comm {
   loggerHandle
 
   /**
-   * the client to
+   * the server listening to the request
    */
-  client2Sensor
   server
 
   constructor(option) {
@@ -16,21 +15,41 @@ export default class Comm {
     this.logger = require('debug')(this.loggerHandle + ':comm')
     this.logger('init udp socket using %o', envs.udp.S_UDP_TYPE)
 
-    this.client2Sensor = dgram.createSocket(envs.udp.S_UDP_TYPE)
     this.server = dgram.createSocket(envs.udp.S_UDP_TYPE)
 
     // start binding
-    this.server.bind(
-      {
-        address: envs.udp.S_SERVER_HOST,
-        port: envs.udp.SERVER_PORT
-      },
-      () => {
-        this.logger('sensor listening on %O', {
-          host: envs.udp.S_SERVER_HOST,
-          port: envs.udp.S_SERVER_PORT
-        })
+    this.server.bind(envs.udp.S_SERVER_PORT)
+
+    // listening event
+    this.server.on('listening', () => {
+      this.logger('sensor listening on %O', {
+        port: envs.udp.S_SERVER_PORT
+      })
+    })
+
+    // register event
+    this.server.on('message', (buf, rinfo) => {
+      let data = {}
+      try {
+        data = JSON.parse(buf.toString('utf8'))
+      } catch {
+        data = {}
       }
-    )
+
+      this.logger('server received message: %O', {
+        data,
+        rinfo
+      })
+    })
+  }
+
+  sendData2Node(data, host, port) {
+    // TODO remove test
+    const client = dgram.createSocket(envs.udp.S_UDP_TYPE)
+    const buf = Buffer.from(JSON.stringify(data), 'utf8')
+    client.send(buf, port, host, err => {
+      this.logger('client.send result err:%O', err)
+      client.close()
+    })
   }
 }

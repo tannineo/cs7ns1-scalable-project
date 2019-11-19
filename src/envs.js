@@ -5,7 +5,7 @@ const log = require('debug')(S_DEBUG_PREFIX + 'envs')
 // udp settings
 const S_SERVER_NAME = process.env.S_SERVER_NAME || 'sensor' + Date.now()
 const S_SERVER_HOST = process.env.S_SERVER_HOST || '0.0.0.0'
-const S_SERVER_PORT = process.env.S_SERVER_PORT || '6666'
+const S_SERVER_PORT = parseInt(process.env.S_SERVER_PORT || 6666)
 const S_UDP_TYPE = process.env.S_UDP_TYPE || 'udp4'
 
 // redis settings
