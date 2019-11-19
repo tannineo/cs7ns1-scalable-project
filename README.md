@@ -100,7 +100,7 @@ The code structure:
 index.js
    |
 sensor.js                          => envs.js => consts.js
-   |                               => helpers.js
+   |                               => coordinate.js
    +-------+-------+---------+
    |       |       |         |
 comm.js data.js superv.js power.js
