@@ -1,9 +1,13 @@
 import * as dgram from 'dgram'
+
+import Coordinate from './coordinate'
 import envs from './envs.js'
 
 export default class Comm {
   logger
   loggerHandle
+
+  coor
 
   /**
    * the server listening to the request
@@ -14,6 +18,11 @@ export default class Comm {
     this.loggerHandle = option.loggerHandle
     this.logger = require('debug')(this.loggerHandle + ':comm')
     this.logger('init udp socket using %o', envs.udp.S_UDP_TYPE)
+
+    this.coor = new Coordinate({
+      x: envs.sensor.S_POS_X,
+      y: envs.sensor.S_POS_Y
+    })
 
     this.server = dgram.createSocket(envs.udp.S_UDP_TYPE)
 
@@ -44,6 +53,11 @@ export default class Comm {
   }
 
   sendData2Node(data, host, port) {
+    this.logger('sendData2Node sending data: %O', {
+      data,
+      host,
+      port
+    })
     const client = dgram.createSocket(envs.udp.S_UDP_TYPE)
     const buf = Buffer.from(JSON.stringify(data), 'utf8')
     client.send(buf, port, host, err => {

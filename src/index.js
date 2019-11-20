@@ -8,4 +8,5 @@ const sensor = new Sensor()
 
 // start the sensor
 logger('index sersor starts running')
+sensor.init()
 sensor.run()

@@ -99,33 +99,54 @@ The code structure:
 ```text
 index.js
    |
-sensor.js                                   => envs.js => consts.js
-   |                                            => coordinate.js  // the class containing position also methods to calculate
-   +-------+-------+---------+--------+             => dummyData.json  // the dummy sensor data
+sensor.js                                       => envs.js => consts.js
+   |                                                => coordinate.js  // the class containing position also methods to calculate
+   +-------+-------+---------+--------+                 => dummyData.json  // the dummy sensor data
+   |       |       |         |        |                     => stashLogger.js  // send log to Logstash
    |       |       |         |        |
 comm.js data.js superv.js power.js route.js
 ```
 
 the lifecycle in one T:
 
-- superv: update the sensor settings based on things in redis:
-  - switch on / off
-  - power
-  - position
-- data: producing the sensor data
-- power: routine energy consumption
-- data: pop (a limited amout of) data from the stored data
-- comm: calculate the route & transmitting the data
-- power: transmiting energy consumption
-- superv: update the sensor status to redis:
-  - power
-  - data load
+1. superv: update the sensor settings based on things in redis:
+   - switch on / off
+   - power
+   - position
+2. data: producing the sensor data
+3. power: routine energy consumption
+4. data: pop (a limited amout of) data from the stored data
+5. comm: calculate the route & transmitting the data
+6. comm: send the data
+7. power: transmiting energy consumption
+8. superv: update the sensor status to redis:
+   - power
+9. log: send metrics to Logstash
+   - sensor_name
+     - power
+     - data load
+     - number of message sent
+     - power comsumption
+     - other routing tracks???
+10. is the sensor down (power)?????
 
 besides the lifecycle, the sensor will ALWAYS listen to the message, so the the sensor parallel the data receiving process
 
 - data: listen and store the data
 
-
 ## Visualization
+
+Use the elastic logstash kibana docker image ([elk](https://hub.docker.com/r/sebp/elk)) to do the log collecting and visualization.
+The documentation: https://elk-docker.readthedocs.io/#elasticsearch-logstash-kibana-elk-docker-image-documentation
+
+exposed ports:
+
+- `5601` (Kibana web interface).
+- `9200` (Elasticsearch JSON interface).
+- `5044` (Logstash Beats interface, receives logs from Beats such as Filebeat – see the Forwarding logs with Filebeat section).
+
+```sh
+docker run --name elkt -p 5601:5601 -p 9200:9200 -p 5044:5044 -p 7777:7777/udp tannineo/elk-udp-docker
+```
 
 ## About

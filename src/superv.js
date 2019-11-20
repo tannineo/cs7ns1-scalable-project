@@ -122,6 +122,14 @@ export default class Superv {
     return false
   }
 
+  async setSwitch(boolOn) {
+    this.logger('setSwitch set the swtich status: %O', boolOn)
+    await this.redisClient.setAsync(
+      REDIS_PREFIX_SWITCH + this.name,
+      boolOn ? 1 : 0
+    )
+  }
+
   async getAllSensorCoordinates() {
     let result = await this.redisClient.scanAsync(
       envs.redis.S_REDIS_DB,

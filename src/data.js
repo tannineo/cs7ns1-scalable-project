@@ -41,7 +41,10 @@ export default class Data {
 
     this.logger('gen data: %O', { genDataPtr: this.genDataPtr, index, data })
 
-    return data
+    return {
+      from: envs.sensor.S_SENSOR_NAME,
+      data
+    }
   }
 
   pushData(data) {
@@ -55,6 +58,9 @@ export default class Data {
 
   popData() {
     const data = this.dataStore.pop()
+
+    // if undefined (empty), return
+    if (!data) return
 
     this.logger('popData : %O', {
       dataPopped: data,

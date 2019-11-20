@@ -9,7 +9,7 @@ const S_SERVER_PORT = parseInt(process.env.S_SERVER_PORT || 6666)
 const S_UDP_TYPE = process.env.S_UDP_TYPE || 'udp4'
 
 // redis settings
-const S_REDIS_HOST = process.env.S_REDIS_HOST || '0.0.0.0'
+const S_REDIS_HOST = process.env.S_REDIS_HOST || 'localhost'
 const S_REDIS_PORT = process.env.S_REDIS_PORT || '6379'
 const S_REDIS_DB = process.env.S_REDIS_DB || '0'
 
@@ -19,9 +19,16 @@ const S_SENSOR_TYPE = process.env.S_SENSOR_TYPE || 'body_temp' // the sink is sp
 const S_T_INTERVAL = 2000 // ms
 const S_MAX_RANGE = parseInt(process.env.S_MAX_RANGE || 10) // cm
 const S_MAX_POWER = parseInt(process.env.S_MAX_POWER || 100000)
+const S_POS_X = parseInt(process.env.S_POS_X || 1)
+const S_POS_Y = parseInt(process.env.S_POS_Y || 1)
+
 // the power used
 const S_POWER_USE_T = parseInt(process.env.S_POWER_USE_T || 1)
 const S_POWER_USE_N = parseInt(process.env.S_POWER_USE_N || 1)
+
+// the logstash settings
+const S_LOGSTASH_HOST = process.env.S_LOGSTASH_HOST || 'localhost'
+const S_LOGSTASH_PORT = parseInt(process.env.S_LOGSTASH_PORT || 7777)
 
 const settings = {
   udp: {
@@ -42,7 +49,13 @@ const settings = {
     S_MAX_RANGE,
     S_MAX_POWER,
     S_POWER_USE_T,
-    S_POWER_USE_N
+    S_POWER_USE_N,
+    S_POS_X,
+    S_POS_Y
+  },
+  logstash: {
+    S_LOGSTASH_HOST,
+    S_LOGSTASH_PORT
   },
   S_DEBUG_PREFIX
 }
