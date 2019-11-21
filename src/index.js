@@ -8,5 +8,8 @@ const sensor = new Sensor()
 
 // start the sensor
 logger('index sersor starts running')
+// init
 sensor.init()
-sensor.run()
+
+if (envs.sensor.S_SENSOR_TYPE === 'sink') sensor.runSink()
+else sensor.run()

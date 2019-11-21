@@ -23,41 +23,18 @@ export default class Comm {
       x: envs.sensor.S_POS_X,
       y: envs.sensor.S_POS_Y
     })
-
-    this.server = dgram.createSocket(envs.udp.S_UDP_TYPE)
-
-    // start binding
-    this.server.bind(envs.udp.S_SERVER_PORT)
-
-    // listening event
-    this.server.on('listening', () => {
-      this.logger('sensor listening on %O', {
-        port: envs.udp.S_SERVER_PORT
-      })
-    })
-
-    // register event
-    this.server.on('message', (buf, rinfo) => {
-      let data = {}
-      try {
-        data = JSON.parse(buf.toString('utf8'))
-      } catch {
-        data = {}
-      }
-
-      this.logger('server received message: %O', {
-        data,
-        rinfo
-      })
-    })
   }
 
-  sendData2Node(data, host, port) {
+  sendData2Node(data, host, port, event = 'data') {
     this.logger('sendData2Node sending data: %O', {
+      event,
       data,
       host,
       port
     })
+
+    data.event = event
+
     const client = dgram.createSocket(envs.udp.S_UDP_TYPE)
     const buf = Buffer.from(JSON.stringify(data), 'utf8')
     client.send(buf, port, host, err => {

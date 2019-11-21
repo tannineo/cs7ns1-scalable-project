@@ -2,7 +2,7 @@
   "verbose": true,
   "ignore": ["*.test.js", "**/*.jpg", "**/*.md", "**/Dockerfile"],
   "execMap": {
-    "js": "babel-node --inspect=23333"
+    "js": "babel-node"
   },
   "env": {
     "DEBUG": "sensor:*"

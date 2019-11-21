@@ -36,13 +36,15 @@ export default class Data {
    */
   genData() {
     const dummyList = dummy[this.dataType]
-    const index = this.genDataPtr++ % dummyList.length
-    const data = dummyList[index]
+    const index = this.genDataPtr++ % dummyList.data.length
+    const data = dummyList.data[index]
 
     this.logger('gen data: %O', { genDataPtr: this.genDataPtr, index, data })
 
     return {
       from: envs.sensor.S_SENSOR_NAME,
+      route: [envs.sensor.S_SENSOR_NAME],
+      createTime: Date.now(),
       data
     }
   }

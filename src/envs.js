@@ -15,12 +15,15 @@ const S_REDIS_DB = process.env.S_REDIS_DB || '0'
 
 // sensor settings
 const S_SENSOR_NAME = process.env.S_SENSOR_NAME || 'sensor233'
-const S_SENSOR_TYPE = process.env.S_SENSOR_TYPE || 'body_temp' // the sink is special
-const S_T_INTERVAL = 2000 // ms
-const S_MAX_RANGE = parseInt(process.env.S_MAX_RANGE || 10) // cm
+const S_SENSOR_TYPE = process.env.S_SENSOR_TYPE || 'bodyTemp' // the sink is special
+const S_T_INTERVAL = 3000 // ms
+const S_MAX_RANGE = parseInt(process.env.S_MAX_RANGE || 5) // cm
 const S_MAX_POWER = parseInt(process.env.S_MAX_POWER || 100000)
 const S_POS_X = parseInt(process.env.S_POS_X || 1)
 const S_POS_Y = parseInt(process.env.S_POS_Y || 1)
+const S_HEARTBEAT_TIMEOUT = parseInt(
+  process.env.S_HEARTBEAT_TIMEOUT || 30 * 1000 // ms
+)
 
 // the power used
 const S_POWER_USE_T = parseInt(process.env.S_POWER_USE_T || 1)
@@ -51,7 +54,8 @@ const settings = {
     S_POWER_USE_T,
     S_POWER_USE_N,
     S_POS_X,
-    S_POS_Y
+    S_POS_Y,
+    S_HEARTBEAT_TIMEOUT
   },
   logstash: {
     S_LOGSTASH_HOST,

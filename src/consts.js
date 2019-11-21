@@ -4,13 +4,20 @@ export default {
    */
   SENSOR_TYPE: {
     sink: 'sink',
-    body_temp: 'body_temp'
+    bodyTemp: 'bodyTemp',
+    respiratoryMonitor: 'respiratoryMonitor',
+    lacticAcidSensor: 'lacticAcidSensor',
+    ecgSensor: 'ecgSensor',
+    pulseOximeterSensor: 'pulseOximeterSensor',
+    pHValue: 'pHValue',
+    glucoseLevel: 'glucoseLevel',
+    heartbeat: 'heartbeat'
   },
-  REDIS_PREFIX: 'sensor_simu:',
-  REDIS_KEY: {
-    SWITCH: 'switch:', // based on 0/1 to off/on
-    POWER: 'power:',
-    COORDINATE_X: 'coor:x:',
-    COORDINATE_Y: 'coor:y:'
+  DATA_TYPE: {
+    DATA: 'data',
+    HEARTBEAT_NODE2SINK: 'heartbeatNode2Sink',
+    HEARTBEAT_SINK2NODE: 'heartbeatSink2Node',
+    REGISTER_NODE2SINK: 'registerNode2Sink',
+    REGISTER_SINK2NODE: 'registerSink2Node'
   }
 }

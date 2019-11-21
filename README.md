@@ -8,6 +8,12 @@ The key part is the routing method. Once the routing method is determined, all o
 
 ## Routing Method
 
+All the sensor will:
+
+- conmunicate with the sink to get the forwarding node
+- have a heartbeat with the sink
+- if one node goes down (no heartbeat) the sink will send new forwarding node
+
 ## Architecture
 
 The simulation will run in a docker environment.
@@ -80,6 +86,10 @@ We may face these situations in our simulation:
 - a node is charged / not charged: Do we really need to charge a BAN device?
   - or just replace it (so it does down for a while)
 - when the position of the sensor changes
+- power to a level: dump the data to the nearest node
+
+Things still need to consider:
+
 - when there is a important data
 - the 'sink' goes down
   - 'sink' is the center of our
@@ -87,7 +97,6 @@ We may face these situations in our simulation:
 So we (operators of simulations) can do changes during runtime on:
 
 - a switch to turn on / off the sensor
-  - also a heart beat (though we do not have to do it in a simulator)
 - the power value
 - the 'positions'(a set of coodinates)
 - a switch of 'start sending important data'

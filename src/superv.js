@@ -92,7 +92,7 @@ export default class Superv {
 
   async getPower() {
     let pow = await this.redisClient.getAsync(REDIS_PREFIX_POW + this.name)
-    pow = parseInt(pow)
+    pow = parseFloat(pow)
 
     this.logger('getPower return new pow: %O', pow)
 
