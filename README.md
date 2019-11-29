@@ -169,8 +169,9 @@ the lifecycle in one T:
      - data load
      - number of message sent
      - power comsumption
-     - other routing tracks???
-10. is the sensor down (power)?????
+     - other routing tracks on the package
+10. is the sensor down (power):
+    - send notifications
 
 besides the lifecycle, the sensor will ALWAYS listen to the message, so the the sensor parallel the data receiving process
 
@@ -206,12 +207,14 @@ S_SENSOR_TYPE=sink S_SERVER_PORT=6660 S_SENSOR_NAME=sink yarn dev # the sink
 
 ## Further Works
 
-- refactor the code
+- bug fixes
+- ad-hoc features
+- refactor the code:
   - reading values from envs everywhere (NOT GOOD)
-  - security issues:
-    - encryption
-    - encoding
-    - fault tolerance
+- security issues:
+  - encryption
+  - encoding
+  - fault tolerance
 
 ## About
 
