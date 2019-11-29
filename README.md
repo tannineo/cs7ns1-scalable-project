@@ -213,6 +213,7 @@ S_SENSOR_TYPE=sink S_SERVER_PORT=6660 S_SENSOR_NAME=sink yarn dev # the sink
 - Dockerfile and docker-compose
 - bug fixes
 - ad-hoc features
+  - loop issue
 - refactor the code:
   - reading values from envs everywhere (NOT GOOD)
 - security issues:
