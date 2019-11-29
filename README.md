@@ -1,5 +1,8 @@
 # cs7ns1-scalable-project
 
+the code is public on github
+https://github.com/tannineo/cs7ns1-scalable-project
+
 ## Goal
 
 > To implement a Body Area Network (BAN) simulation, with a somewhat P2P network routing fucntion inside.
