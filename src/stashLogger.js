@@ -25,4 +25,21 @@ export default class StashLogger {
     this.logger('sendLog... %O', logstashData)
     this.logstashClient.debug(logstashData)
   }
+
+  sendNotification(str) {
+    require('axios')({
+      method: 'POST',
+      url: 'https://slack.com/api/chat.postMessage',
+      headers: {
+        Authorization:
+          'Bearer xoxb-843902607728-843905166512-FPDdw9UtvZi6sKqXgsrSxpty'
+      },
+      data: {
+        channel: 'general',
+        text: str
+      }
+    }).then(() => {
+      this.logger('sendNotification notification sent: ' + str)
+    })
+  }
 }

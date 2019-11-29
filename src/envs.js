@@ -18,7 +18,7 @@ const S_SENSOR_NAME = process.env.S_SENSOR_NAME || 'sensor233'
 const S_SENSOR_TYPE = process.env.S_SENSOR_TYPE || 'bodyTemp' // the sink is special
 const S_T_INTERVAL = 3000 // ms
 const S_MAX_RANGE = parseInt(process.env.S_MAX_RANGE || 5) // cm
-const S_MAX_POWER = parseInt(process.env.S_MAX_POWER || 100000)
+const S_MAX_POWER = parseInt(process.env.S_MAX_POWER || 100)
 const S_POS_X = parseInt(process.env.S_POS_X || 1)
 const S_POS_Y = parseInt(process.env.S_POS_Y || 1)
 const S_HEARTBEAT_TIMEOUT = parseInt(
@@ -28,6 +28,10 @@ const S_HEARTBEAT_TIMEOUT = parseInt(
 // the power used
 const S_POWER_USE_T = parseInt(process.env.S_POWER_USE_T || 1)
 const S_POWER_USE_N = parseInt(process.env.S_POWER_USE_N || 1)
+
+// sink settings
+const S_SINK_HOST = process.env.S_SINK_HOST || 'localhost'
+const S_SINK_PORT = parseInt(process.env.S_SINK_PORT || 6660)
 
 // the logstash settings
 const S_LOGSTASH_HOST = process.env.S_LOGSTASH_HOST || 'localhost'
@@ -55,7 +59,9 @@ const settings = {
     S_POWER_USE_N,
     S_POS_X,
     S_POS_Y,
-    S_HEARTBEAT_TIMEOUT
+    S_HEARTBEAT_TIMEOUT,
+    S_SINK_HOST,
+    S_SINK_PORT
   },
   logstash: {
     S_LOGSTASH_HOST,

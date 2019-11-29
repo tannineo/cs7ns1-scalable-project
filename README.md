@@ -18,7 +18,7 @@ All the sensor will:
 
 The simulation will run in a docker environment.
 
-With docker a single file can be used to describe a bunch of vitual machines and it's easy to set up.
+With docker a single file (Dockerfile for the image and docker-compose for the whoel cluster) can be used to describe a bunch of vitual machines and it's easy to set up.
 
 Compared to AWS IoT:
 
@@ -36,15 +36,13 @@ The simulation will contain:
 
 ## Key Factors
 
-### Duty Cycle
-
 ### Communication & Why ZigBee
 
 - simulation communications: UDP
   - datagrams are sent and never cared by sender, it's more like 'real' communications via radio connetions
   - and light weight for runtime
 - data encryption: since it's not our focus, we do not use encryption / or just pick one
-  - in real world ZigBee will handle it (?)
+  - in real world ZigBee will handle it
 
 So the sensors should:
 
@@ -52,9 +50,24 @@ So the sensors should:
 
 Why using ZigBee? Not WiFi? Not Bluetooth?
 
+```bib
+@INPROCEEDINGS{8070716,
+author={N. V. R. {Kumar} and C. {Bhuvana} and S. {Anushya}},
+booktitle={2017 International Conference on Information Communication and Embedded Systems (ICICES)},
+title={Comparison of ZigBee and Bluetooth wireless technologies-survey},
+year={2017},
+volume={},
+number={},
+pages={1-4},
+keywords={Bluetooth;protocols;Zigbee;ZigBee;wireless networking standards;Bluetooth wireless technologies;remote control;sensor application;radio environments;protocols;ZigBee;Bluetooth;Protocols;Wireless communication;Wireless sensor networks;Communication system security;Security;ZigBee;Bluetooth;mobile user;GPS},
+doi={10.1109/ICICES.2017.8070716},
+ISSN={null},
+month={Feb},}
+```
+
 ### Power Comsumption: Communication vs Others (Processing and Sensoring)
 
-The should be a paper about the CURVE of range-comsumption.
+There should be a paper about the CURVE of range-comsumption.
 And also a paper of the transmission/communication takes how much of the power of the whole system.
 
 The sensors should:
@@ -69,6 +82,21 @@ The sensors should:
 - keep updating the power value in key-value storage
 - send logs on power consumption details
 
+```bib
+@INPROCEEDINGS{7289160,
+author={M. {Moid Sahndhu} and N. {Javaid} and M. {Imran} and M. {Guizani} and Z. A. {Khan} and U. {Qasim}},
+booktitle={2015 International Wireless Communications and Mobile Computing Conference (IWCMC)},
+title={BEC: A novel routing protocol for balanced energy consumption in Wireless Body Area Networks},
+year={2015},
+volume={},
+number={},
+pages={653-658},
+keywords={body area networks;routing protocols;BEC;novel routing protocol;wireless body area networks;WBAN;balanced energy consumption;relay nodes;Energy consumption;Routing protocols;Monitoring;Body area networks;Routing;Wireless communication;WBANs;balanced energy consumption;efficiency;network lifetime;throughput},
+doi={10.1109/IWCMC.2015.7289160},
+ISSN={2376-6506},
+month={Aug},}
+```
+
 ### Data Capacity
 
 There are no limit on the local data storage now but it will have one
@@ -77,16 +105,21 @@ Strategies should be considered when the local storage on a sensor is (nearly) f
 
 ### Security
 
-Except communications, any other things we need to consider?
+Except communications, other things we need to consider:
+
+- encryption:
+  - SSL?
+  - data encoding with protobuf?
 
 ### Simulation Situation
 
 We may face these situations in our simulation:
 
-- a node is charged / not charged: Do we really need to charge a BAN device?
-  - or just replace it (so it does down for a while)
-- when the position of the sensor changes
-- power to a level: dump the data to the nearest node
+- A node is charged / not charged:
+  - Do we really need to charge a BAN device?
+  - Or just replace it (so it does down for a while)
+- When the position of the sensor changes
+- Power to a level: dump the data to the nearest node
 
 Things still need to consider:
 
@@ -158,4 +191,29 @@ exposed ports:
 docker run --name elkt -p 5601:5601 -p 9200:9200 -p 5044:5044 -p 7777:7777/udp tannineo/elk-udp-docker
 ```
 
+Or installing and running ELK in you own machine with package managers available.
+
+## Simulation Operations
+
+To run sensors and sink in dev env.
+
+```shell
+yarn dev # the sensor has default setting values in envs.js
+S_SINK_HOST=6660 S_SERVER_PORT=6661 S_SENSOR_NAME=sensor213 S_SENSOR_TYPE=lacticAcidSensor S_POS_X=5 S_POS_Y=5 yarn dev
+S_SINK_HOST=6660 S_SERVER_PORT=6662 S_SENSOR_NAME=sensor2133 S_POS_X=4 S_POS_Y=4 yarn dev
+S_SENSOR_TYPE=sink S_SERVER_PORT=6660 S_SENSOR_NAME=sink yarn dev # the sink
+```
+
+## Further Works
+
+- refactor the code
+  - reading values from envs everywhere (NOT GOOD)
+  - security issues:
+    - encryption
+    - encoding
+    - fault tolerance
+
 ## About
+
+The project is discarded (for the module) due to the time constraints.
+Still need perfection.

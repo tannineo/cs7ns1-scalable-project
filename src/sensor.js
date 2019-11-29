@@ -223,8 +223,8 @@ export default class Sensor {
                 y: this.comm.coor.y
               }
             },
-            'localhost',
-            6660,
+            envs.sensor.S_SINK_HOST,
+            envs.sensor.S_SINK_PORT,
             consts.DATA_TYPE.HEARTBEAT_NODE2SINK
           )
         }
@@ -249,10 +249,8 @@ export default class Sensor {
 
         // 5. calculate the nearest route
         // using the forwardingNodeInfo
-        // TODO: delete this hard coded node
         if (this.forwardingNodeInfo) {
           // 6. send the data
-          // TODO change it using forwardingNodeInfo
           await bluebird.all(
             dataPack.map(async d =>
               this.comm.sendData2Node(
@@ -282,10 +280,36 @@ export default class Sensor {
           powerConsumption: originalPower - this.power.value
         })
 
-        // 10. judge if sensor goes down (no power)
-        if (this.power.value < 0) {
-          // set 'off'
-          await this.superv.setSwitch(false)
+        // 10. if the power goes down to 25
+        // TODO hard coded 25
+        if (this.power.value < 25 && this.forwardingNodeInfo) {
+          this.logger(
+            'OHHH dump the dataStore to forwarding node when the power goes down to %O',
+            {
+              threshold: 25
+            }
+          )
+          // send the data
+          await bluebird.all(
+            this.data.dataStore.map(async d => {
+              this.comm.sendData2Node(
+                d,
+                this.forwardingNodeInfo.host,
+                this.forwardingNodeInfo.port,
+                'data'
+              )
+              this.power.doTransition()
+            })
+          )
+        }
+
+        // 11. judge if sensor goes down (no power)
+        if (this.power.value <= 0) {
+          // TODO set 'off' ??
+          this.logger('OHHHHH superpower charge!!!!')
+          this.power.value = envs.sensor.S_MAX_POWER
+          await this.superv.setPower(this.power.value)
+          // await this.superv.setSwitch(false)
         }
 
         this.logger('>>>>>>>> SENSOR LIFECYCLE END?????... <<<<<<<<')
@@ -330,7 +354,7 @@ export default class Sensor {
         })
       }
     }
-    this.logger('sinkCheckHeartbeat end result : %O', this.heartbeatArray)
+    this.logger('sinkCheckHeartbeat end result: %O', this.heartbeatArray)
   }
 
   checkIsInHeartbeatArray(name) {
@@ -375,19 +399,24 @@ export default class Sensor {
 
     // 2. the nearest node vs sensor
     for (const node of this.heartbeatArray) {
-      // cal sink distance
-      const sinkDist = Coordinate.calDistence(node.coor, this.comm.coor)
-
-      // continue if exists
+      // 2.0 continue if exists
       let flag = false
       for (let i = 0; i < newRouteLayers[0].length; i++) {
-        if (newRouteLayers[0][i].from === node.name) {
+        if (newRouteLayers[0][i].from === node.from) {
           flag = true
           break
         }
       }
-      if (flag) continue
+      if (flag) {
+        this.logger(
+          'sinkUpdateRoute node skip existing direct connect %O',
+          node
+        )
+        continue
+      }
 
+      // 2.1 cal sink distance
+      const sinkDist = Coordinate.calDistence(node.coor, this.comm.coor)
       flag = false
       for (let i = 0; i < newRouteLayers[0].length; i++) {
         const nodeDist = Coordinate.calDistence(
@@ -414,7 +443,6 @@ export default class Sensor {
           break
         }
       }
-
       // 3. direct connect sink (no choice)
       if (!flag) {
         this.logger('sinkUpdateRoute node direct connect (no choice) %O', {
@@ -463,7 +491,10 @@ export default class Sensor {
     for (let i = 0; i < this.heartbeatArray.length; i++) {
       if (this.heartbeatArray[i].from === udpData.from) {
         flag = true
-        this.heartbeatArray[i].createTime = Date.now()
+        this.heartbeatArray[i] = udpData
+        this.heartbeatArray[i].createTime = Date.now() // heartbeat update all data
+        this.logger('commHandlerRegisterSink updating the data: %O', udpData)
+        break
       }
     }
     if (!flag) {
@@ -549,21 +580,29 @@ export default class Sensor {
     for (let i = 0; i < this.heartbeatArray.length; i++) {
       if (this.heartbeatArray[i].from === udpData.from) {
         flag = true
-        this.heartbeatArray[i].createTime = Date.now()
+        this.heartbeatArray[i] = udpData
+        this.heartbeatArray[i].createTime = Date.now() // heartbeat update all data
+        this.logger('commHandlerHeartbeatSink updating the data: %O', udpData)
+        break
       }
     }
     if (!flag) {
       this.heartbeatArray.push(udpData)
     }
 
-    // return the forwardingNodeInfo
-    const routeInfo = this.findRouteSettings(udpData.from)
-
     this.comm.sendData2Node(
-      routeInfo,
+      {
+        name: consts.SENSOR_TYPE.sink,
+        host: envs.udp.S_SERVER_HOST,
+        port: envs.udp.S_SERVER_PORT,
+        coor: {
+          x: this.comm.coor.x,
+          y: this.comm.coor.y
+        }
+      },
       udpData.host,
       udpData.port,
-      consts.DATA_TYPE.HEARTBEAT_SINK2NODE
+      consts.DATA_TYPE.REGISTER_SINK2NODE
     )
   }
 
