@@ -210,6 +210,7 @@ S_SENSOR_TYPE=sink S_SERVER_PORT=6660 S_SENSOR_NAME=sink yarn dev # the sink
 
 ## Further Works
 
+- Dockerfile and docker-compose
 - bug fixes
 - ad-hoc features
 - refactor the code:
